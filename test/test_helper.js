@@ -15,9 +15,21 @@ before(done => {
 
 // Hook
 beforeEach(done => {
-  //delete all collection before test
-  mongoose.connection.collections.users.drop(() => {
-    // ! Ready to run the next test!
-    done();
+  const { users, comments, blogposts } = mongoose.connection.collections;
+
+  // ! delete all collection before test
+  /*
+    mongoose.connection.collections.users.drop(() => {
+      // ! Ready to run the next test!
+      done();
+    });
+  */
+
+  users.drop(() => {
+    comments.drop(() => {
+      blogposts.drop(() => {
+        done();
+      });
+    });
   });
 });
